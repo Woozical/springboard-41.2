@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+
+const getFromLocalStorage = () => {
+  const local = localStorage.getItem("cfColors");
+  return local ? local : [];
+}
+
+const saveToLocalStorage = (newColor) => {
+  let local = localStorage.getItem("cfColors");
+  local = local ? local : [];
+  local.push(newColor);
+}
 
 function App() {
+  const [colors, setColors] = useState(getFromLocalStorage);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
     </div>
   );
 }
