@@ -1,14 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const DEFAULT_STATE = {color:"#000000", name:"New Color"};  
 
 const NewColorForm = (props) => {
   const [formData, setFormData] = useState(DEFAULT_STATE);
+  const nav = useNavigate();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     props.submitCallback(formData);
     setFormData(DEFAULT_STATE);
+    nav("/colors");
   }
 
   const handleChange = (evt) => {

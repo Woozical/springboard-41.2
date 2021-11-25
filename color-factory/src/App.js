@@ -1,22 +1,34 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Routes, Route, NavLink } from "react-router-dom";
+import NewColorForm from './NewColorForm';
+import ColorDisplay from './ColorDisplay';
+import ColorIndex from './ColorIndex';
 
 const getFromLocalStorage = () => {
-  const local = localStorage.getItem("cfColors");
+  const local = JSON.parse(localStorage.getItem("cfColors"));
   return local ? local : [];
-}
-
-const saveToLocalStorage = (newColor) => {
-  let local = localStorage.getItem("cfColors");
-  local = local ? local : [];
-  local.push(newColor);
 }
 
 function App() {
   const [colors, setColors] = useState(getFromLocalStorage);
+  const addToColors = (newColor) => {
+    const urlName = newColor.name.toLowerCase().replaceAll(" ", "_");
+    const n = {...newColor, urlName}
+    setColors(c => [...c, n]);
+  }
+  // Local storage sync up
+  useEffect(() => {
+    localStorage.setItem("cfColors", JSON.stringify(colors));
+  }, [colors]);
+
   return (
     <div className="App">
-
+      <Routes>
+        <Route path="/colors/new" element={<NewColorForm submitCallback={addToColors} />} />
+        <Route path="/colors/:urlName" element={<ColorDisplay colors={colors} />} />
+        <Route path="/colors" element={<ColorIndex colors={colors} />} />
+      </Routes>
     </div>
   );
 }
