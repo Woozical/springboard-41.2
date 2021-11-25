@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import NewColorForm from './NewColorForm';
 import ColorDisplay from './ColorDisplay';
 import ColorIndex from './ColorIndex';
@@ -28,6 +28,7 @@ function App() {
         <Route path="/colors/new" element={<NewColorForm submitCallback={addToColors} />} />
         <Route path="/colors/:urlName" element={<ColorDisplay colors={colors} />} />
         <Route path="/colors" element={<ColorIndex colors={colors} />} />
+        <Route path="*" element={<Navigate to="/colors" />} />
       </Routes>
     </div>
   );
